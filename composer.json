@@ -1,0 +1,19 @@
+{
+    "name": "tecnocen/codeception-api-skeleton",
+    "description": "Codeception template to  create automated tests on external APIs",
+    "keywords": ["codeception", "testing", "acceptance", "project template"],
+    "type": "project",
+    "license": "BSD-3-Clause",
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=5.6.0"
+    },
+    "require-dev": {
+        "codeception/base": "^2.2.3",
+        "codeception/verify": "~0.3.1",
+        "guzzlehttp/guzzle": ">=4.1.4 <7.0"
+    },
+    "config": {
+        "process-timeout": 1800
+    }
+}

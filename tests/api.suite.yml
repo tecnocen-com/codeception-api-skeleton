@@ -1,0 +1,8 @@
+actor: ApiTester
+modules:
+    enabled:
+        - \Helper\Api
+        - REST:
+            ## change for the url you want to test.
+            url: http://qa.gestiondeaccesos.com
+            depends: PhpBrowser
