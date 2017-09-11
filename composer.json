@@ -17,13 +17,20 @@
     "scripts": {
         "deploy": [
             "@composer install --prefer-dist",
-            "wget http://selenium-release.storage.googleapis.com/2.44/selenium-server-standalone-2.44.0.jar -O selenium-ss.jar"
+            "wget https://goo.gl/hWYjHR -O selenium-ss.jar",
+            "wget https://chromedriver.storage.googleapis.com/2.32/chromedriver_linux64.zip -O chromedriver.zip",
+            "wget https://github.com/mozilla/geckodriver/releases/download/v0.18.0/geckodriver-v0.18.0-linux64.tar.gz -O geckodriver.tar.gz",
+            "unzip -f chromedriver.zip",
+            "tar zxvf geckodriver.tar.gz",
+            "rm chromedriver.zip",
+            "rm geckodriver.tar.gz"
         ],
-        "init-selenium": "DISPLAY=:1 xvfb-run java -jar ./selenium-ss.jar",
-        "run-functional-tests": "codecept run functional -v",
-        "run-api-tests": "codecept run api -v",
+        "init-chromedriver": "java -Dwebdriver.chrome.driver=./chromedriver -jar ./selenium-ss.jar",
+        "init-geckodriver": "java -Dwebdriver.gecko.driver=./geckodriver -jar ./selenium-ss.jar",
+        "run-functional-tests": "codecept run functional -v --steps",
+        "run-api-tests": "codecept run api -v --steps",
         "run-acceptance-tests": "codecept run acceptance -v --steps",
-        "run-tests": "codecept run -v"
+        "run-tests": "codecept run -v --steps"
     },
     "config": {
         "process-timeout": 1800
