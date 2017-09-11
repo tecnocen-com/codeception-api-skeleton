@@ -11,6 +11,7 @@
     "require-dev": {
         "codeception/base": "^2.2.3",
         "codeception/verify": "~0.3.1",
+        "facebook/webdriver": "^1.0.1",
         "guzzlehttp/guzzle": ">=4.1.4 <7.0"
     },
     "scripts": {
@@ -21,7 +22,7 @@
         "init-selenium": "DISPLAY=:1 xvfb-run java -jar ./selenium-ss.jar",
         "run-functional-tests": "codecept run functional -v",
         "run-api-tests": "codecept run api -v",
-        "run-acceptance-tests": "codecept run acceptance -v",
+        "run-acceptance-tests": "codecept run acceptance -v --steps",
         "run-tests": "codecept run -v"
     },
     "config": {
