@@ -11,4 +11,4 @@ modules:
         # add a framework module here
         - \Helper\Functional
         - PhpBrowser:
-            url: http://qa.gestiondeaccesos.com
+            url: http://localhost/myapp

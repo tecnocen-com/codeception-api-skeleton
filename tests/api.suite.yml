@@ -4,5 +4,6 @@ modules:
         - \Helper\Api
         - REST:
             ## change for the url you want to test.
-            url: http://qa.gestiondeaccesos.com
+            url: http://localhost/myapi
             depends: PhpBrowser
+            part: Json

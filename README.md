@@ -46,7 +46,7 @@ Run Tests
 
 You can run tests by using the following composer scripts.
 
-- `composre init-selenium` initializes selenium standalone server.
+- `composer init-selenium` initializes selenium standalone server.
 - `composer run-functional-tests` run functional tests. (selenium not required)
 - `composer run-api-tests` run REST api tests. (selenium not required)
 - `composer run-acceptance-tests` run acceptance tests. (selenium required)
