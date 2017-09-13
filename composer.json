@@ -12,6 +12,7 @@
         "codeception/base": "^2.2.3",
         "codeception/verify": "~0.3.1",
         "facebook/webdriver": "^1.0.1",
+        "flow/jsonpath": "^0.3.0",
         "guzzlehttp/guzzle": ">=4.1.4 <7.0"
     },
     "scripts": {
