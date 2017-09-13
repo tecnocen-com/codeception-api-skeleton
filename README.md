@@ -26,13 +26,13 @@ initialize the installed application. You only need to do these once for all.
 1. Open a console terminal, execute the composer script `deploy`
   `composer deploy`
 
-2. By default it downloads `2.44` as the file `selenium-ss.jar` in the root
+2. By default it downloads `3.5.3` as the file `selenium-ss.jar` in the root
    directory for the project, you can update the version of selenium as you
    prefer by visiting the [selenium] website.
 
-3. Install java jdk and xvfb
-   - [Guide for ubuntu 14.04]
-   - [Guide for ubuntu 16.04]
+3. Install java jdk
+   - [Installing Selenium on ubuntu 14.04]
+   - [Installing Selenium on ubuntu 16.04]
 
 4. Edit the files
    - `codeception.yml`
@@ -46,11 +46,12 @@ Run Tests
 
 You can run tests by using the following composer scripts.
 
-- `composer init-selenium` initializes selenium standalone server.
+- `composer init-chromedriver` init selenium standalone server to use chrome.
+- `composer init-geckodriver` init selenium standalone server to use firefox.
 - `composer run-functional-tests` run functional tests. (selenium not required)
 - `composer run-api-tests` run REST api tests. (selenium not required)
 - `composer run-acceptance-tests` run acceptance tests. (selenium required)
-- `composer run-tests` **all of the above**
+- `composer run-tests` runs all tests (selenium required)
 
 Write tests
 -----------
@@ -67,5 +68,5 @@ source code its not possible to create unit tests or review test coverage.
 [codeception]: http://codeception.com/
 [composer]: https://getcomposer.org/download/
 [selenium]: http://www.seleniumhq.org/download/
-[Guide for ubuntu 14.04]: https://gist.github.com/curtismcmullan/7be1a8c1c841a9d8db2c
-[Guide for ubuntu 16.04]: https://gist.github.com/ziadoz/3e8ab7e944d02fe872c3454d17af31a5
+[Installing Selenium on ubuntu 14.04]: https://gist.github.com/curtismcmullan/7be1a8c1c841a9d8db2c
+[Installing Selenium on ubuntu 16.04]: https://gist.github.com/ziadoz/3e8ab7e944d02fe872c3454d17af31a5

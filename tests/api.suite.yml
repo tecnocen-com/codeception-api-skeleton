@@ -4,6 +4,6 @@ modules:
         - \Helper\Api
         - REST:
             ## change for the url you want to test.
-            url: http://localhost/myapi
+            url: http://localhost/myapi/v1
             depends: PhpBrowser
             part: Json
