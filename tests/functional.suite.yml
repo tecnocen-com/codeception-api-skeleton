@@ -8,7 +8,6 @@
 actor: FunctionalTester
 modules:
     enabled:
-        # add a framework module here
         - \Helper\Functional
         - PhpBrowser:
             url: http://localhost/myapp
