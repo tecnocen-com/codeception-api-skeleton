@@ -7,50 +7,75 @@ Skeleton to create codeception tests using for external projects using suites
 - api
 - acceptance
 
+Requirements
+------------
+
+- Php >=7.0
+- Composer >=1.3
+- Java JDK able to run selenium web drivers
+  [Official Documentation](http://www.seleniumhq.org/docs/03_webdriver.jsp#php)
+
 Installation
 ------------
 
-The preferred way to install is through [composer]
+The preferred way to install is through [composer].
 
 `composer create-project --prefer-dist tecnocen/codeception-api-skeleton codeception-tests`
 
 The command installs the advanced application in a directory named
 `codeception-tests`. You can choose a different directory name if you want.
 
+If you cloned the project using a CVS like git then run
+
+`composer install --prefer-dist`
+
+on the root project before continuing preparations.
+
 Preparing application
 ---------------------
 
-After you install the application, you have to conduct the following steps to
-initialize the installed application. You only need to do these once for all.
+### `composer deploy`
 
-1. Open a console terminal, execute the composer script `deploy`
-  `composer deploy`
+This library provides a console command to help initialize the application.
 
-2. By default it downloads `2.44` as the file `selenium-ss.jar` in the root
-   directory for the project, you can update the version of selenium as you
-   prefer by visiting the [selenium] website.
+`composer deploy -- os=win32 gecko=0.18.0 chrome=2.32`
 
-3. Install java jdk and xvfb
-   - [Guide for ubuntu 14.04]
-   - [Guide for ubuntu 16.04]
+It accepts parameters
 
-4. Edit the files
-   - `codeception.yml`
-   - `tests/functional.suite.yml`
-   - `tests/api.suite.yml`
-   - `tests/acceptance.suite.yml`
-   To point at your server api url.
+- os: the Operative system version which will run the selenium web driver.
+  By default it will be auto determined by php.
+- gecko: the version of [Gecko Driver] to be used.
+- chrome: the version of [Chrome Driver] to be used.
+
+This will install the php dependencies using composer and download [selenium]
+standalone and the supported webdrivers in the files `selenium-ss.jar`,
+`geckodriver` and `chromedriver`
+
+### Edit your configuration files
+
+Configure [codeception] to use your project url.
+
+   - `tests/functional.suite.yml` configuration `PhpBrowser.url`
+   - `tests/api.suite.yml` configuration `Rest.url`
+   - `tests/acceptance.suite.yml` configuration `WebDriver.url`
+
+### Initialize web drivers
+
+This library also provides commands to easily initialize the selenium web
+drivers
+
+- `composer init-chromedriver` to run the tests on chrome or chromium browser.
+- `composer init-geckodriver` to run the tests on firefox.
 
 Run Tests
 ---------
 
 You can run tests by using the following composer scripts.
 
-- `composer init-selenium` initializes selenium standalone server.
 - `composer run-functional-tests` run functional tests. (selenium not required)
 - `composer run-api-tests` run REST api tests. (selenium not required)
 - `composer run-acceptance-tests` run acceptance tests. (selenium required)
-- `composer run-tests` **all of the above**
+- `composer run-tests` **all supported tests**
 
 Write tests
 -----------
@@ -67,5 +92,5 @@ source code its not possible to create unit tests or review test coverage.
 [codeception]: http://codeception.com/
 [composer]: https://getcomposer.org/download/
 [selenium]: http://www.seleniumhq.org/download/
-[Guide for ubuntu 14.04]: https://gist.github.com/curtismcmullan/7be1a8c1c841a9d8db2c
-[Guide for ubuntu 16.04]: https://gist.github.com/ziadoz/3e8ab7e944d02fe872c3454d17af31a5
+[Chrome Driver]: https://sites.google.com/a/chromium.org/chromedriver/
+[Gecko Driver]: https://github.com/mozilla/geckodriver/

@@ -6,21 +6,21 @@
     "license": "BSD-3-Clause",
     "minimum-stability": "dev",
     "require": {
-        "php": ">=5.6.0"
-    },
-    "require-dev": {
+        "php": ">=7.0.0",
         "codeception/base": "^2.2.3",
         "codeception/verify": "~0.3.1",
         "facebook/webdriver": "^1.0.1",
         "flow/jsonpath": "^0.3.0",
         "guzzlehttp/guzzle": ">=4.1.4 <7.0"
     },
+    "autoload": {
+        "classmap": [
+            "ComposerListener.php"
+        ]
+    },
     "scripts": {
         "deploy": [
-            "@composer install --prefer-dist",
-            "wget https://goo.gl/hWYjHR -O selenium-ss.jar",
-            "wget https://chromedriver.storage.googleapis.com/2.32/chromedriver_linux64.zip -O chromedriver.zip",
-            "wget https://github.com/mozilla/geckodriver/releases/download/v0.18.0/geckodriver-v0.18.0-linux64.tar.gz -O geckodriver.tar.gz",
+            "ComposerListener::downloadDrivers",
             "unzip -f chromedriver.zip",
             "tar zxvf geckodriver.tar.gz",
             "rm chromedriver.zip",
