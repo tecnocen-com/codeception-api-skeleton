@@ -4,8 +4,10 @@ use Composer\Script\Event;
 
 class ComposerListener
 {
+    const DEFAULT_SELENIUM_VERSION = '3.6.0';
     const DEFAULT_GECKODRIVER_VERSION = '0.18.0';
     const DEFAULT_CHROMEDRIVER_VERSION = '2.32';
+    const SELENIUM_FILENAME = 'selenium-ss.jar';
     const GECKODRIVER_FILENAME = 'geckodriver.tar.gz';
     const CHROMEDRIVER_FILENAME = 'chromedriver.zip';
     
@@ -15,6 +17,20 @@ class ComposerListener
         'mac64',
         'win32',
     ];
+
+    /**
+     * @param  Event  $event
+     */
+    public static function downloadSelenium(Event $event)
+    {
+        $args = self::parseArguments($event->getArguments());
+        self::downloadFile(
+            self::SELENIUM_FILENAME,
+            self::buildSeleniumUrl(
+                $args['selenium'] ?? self::DEFAULT_SELENIUM_VERSION
+            )
+        );
+    }
 
     /**
      * @param  Event  $event
@@ -59,6 +75,13 @@ class ComposerListener
     ): string {
         return "https://chromedriver.storage.googleapis.com/{$version}/"
             . "chromedriver_{$os}.zip";
+    }
+
+    private static function buildSeleniumUrl(string $version): string
+    {
+        return 'http://selenium-release.storage.googleapis.com/'
+            . substr($version, 0, 3)
+            . "/selenium-server-standalone-{$version}.jar";
     }
 
     private static function downloadFile($filename, $url)

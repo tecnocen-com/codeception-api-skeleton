@@ -38,17 +38,19 @@ Preparing application
 
 This library provides a console command to help initialize the application.
 
-`composer deploy -- os=win32 gecko=0.18.0 chrome=2.32`
+`composer deploy -- os=win32 gecko=0.18.0 chrome=2.32 selenium=3.6.0`
 
 It accepts parameters
 
 - os: the Operative system version which will run the selenium web driver.
   By default it will be auto determined by php.
+- selenium: the version for selenium standalone jar file.
 - gecko: the version of [Gecko Driver] to be used.
 - chrome: the version of [Chrome Driver] to be used.
 
 This will install the php dependencies using composer and download [selenium]
 standalone and the supported webdrivers in the files `selenium-ss.jar`,
+
 `geckodriver` and `chromedriver`
 
 ### Edit your configuration files
