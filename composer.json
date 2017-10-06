@@ -21,10 +21,10 @@
     "scripts": {
         "deploy": [
             "ComposerListener::downloadDrivers",
-            "unzip -f chromedriver.zip",
-            "tar zxvf geckodriver.tar.gz",
-            "rm chromedriver.zip",
-            "rm geckodriver.tar.gz"
+            "unzip -f chromedriver.zip ##",
+            "tar zxvf geckodriver.tar.gz ##",
+            "rm chromedriver.zip ##",
+            "rm geckodriver.tar.gz ##"
         ],
         "init-chromedriver": "java -Dwebdriver.chrome.driver=./chromedriver -jar ./selenium-ss.jar",
         "init-geckodriver": "java -Dwebdriver.gecko.driver=./geckodriver -jar ./selenium-ss.jar",
