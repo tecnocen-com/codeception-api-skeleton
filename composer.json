@@ -22,7 +22,7 @@
         "deploy": [
             "ComposerListener::downloadDrivers",
             "ComposerListener::downloadSelenium",
-            "unzip -f chromedriver.zip ##",
+            "unzip -o chromedriver.zip ##",
             "tar zxvf geckodriver.tar.gz ##",
             "rm chromedriver.zip ##",
             "rm geckodriver.tar.gz ##"
