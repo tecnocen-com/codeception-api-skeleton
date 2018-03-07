@@ -4,9 +4,9 @@ use Composer\Script\Event;
 
 class ComposerListener
 {
-    const DEFAULT_SELENIUM_VERSION = '3.6.0';
-    const DEFAULT_GECKODRIVER_VERSION = '0.18.0';
-    const DEFAULT_CHROMEDRIVER_VERSION = '2.32';
+    const DEFAULT_SELENIUM_VERSION = '3.10.0';
+    const DEFAULT_GECKODRIVER_VERSION = '0.19.1';
+    const DEFAULT_CHROMEDRIVER_VERSION = '2.35';
     const SELENIUM_FILENAME = 'selenium-ss.jar';
     const GECKODRIVER_FILENAME = 'geckodriver.tar.gz';
     const CHROMEDRIVER_FILENAME = 'chromedriver.zip';
@@ -80,7 +80,7 @@ class ComposerListener
     private static function buildSeleniumUrl(string $version): string
     {
         return 'http://selenium-release.storage.googleapis.com/'
-            . substr($version, 0, 3)
+            . substr($version, 0, strpos($version, '.', 2))
             . "/selenium-server-standalone-{$version}.jar";
     }
 
