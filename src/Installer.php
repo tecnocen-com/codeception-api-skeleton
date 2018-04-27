@@ -2,14 +2,16 @@
 
 namespace CodeceptionSkeleton;
 
+use CodeceptionSkeleton\WebFile\{
+    SeleniumDriver,
+    ChromeDriver,
+    GeckoDriver
+};
+
 class Installer
 {
-    const DEFAULT_SELENIUM_VERSION = '3.10.0';
-    const DEFAULT_GECKODRIVER_VERSION = '0.19.1';
-    const DEFAULT_CHROMEDRIVER_VERSION = '2.35';
-    const SELENIUM_FILENAME = 'selenium-ss.jar';
-    const GECKODRIVER_FILENAME = 'geckodriver.tar.gz';
-    const CHROMEDRIVER_FILENAME = 'chromedriver.zip';
+    const DEFAULT_CHROMEDRIVER_VERSION = '';
+    const SELENIUM_FILENAME = '';
     
     const SUPPORTED_OPERATIVE_SYSTEMS = [
         'linux32',
@@ -22,12 +24,10 @@ class Installer
      */
     public static function downloadSelenium($args)
     {
-        self::downloadFile(
-            self::SELENIUM_FILENAME,
-            self::buildSeleniumUrl(
-                $args['selenium'] ?? self::DEFAULT_SELENIUM_VERSION
-            )
-        );
+        if (isset($args['selenium'])) {
+            SeleniumDriver::$version = $args['selenium'];
+        }
+        SeleniumDriver::download();
     }
 
     /**
@@ -35,58 +35,26 @@ class Installer
     public static function downloadDrivers($args)
     {
         $os = $args['os'] ?? self::determineOS();
-        $gdVersion = $args['gdVersion'] ?? self::DEFAULT_GECKODRIVER_VERSION;
-        $cdVersion = $args['cdVersion'] ?? self::DEFAULT_CHROMEDRIVER_VERSION;
+
         if (!in_array($os, self::SUPPORTED_OPERATIVE_SYSTEMS)) {
             // $event->stopPropagation();
             echo "Provided OS '$os' is not supported.\n";
             exit(1);
         }
-        self::downloadFile(
-            self::GECKODRIVER_FILENAME,
-            self::buildGeckoDriverUrl($os, $gdVersion)
-        );
-        self::downloadFile(
-            self::CHROMEDRIVER_FILENAME,
-            self::buildChromeDriverUrl($os, $cdVersion)
-        );
+
+        GeckoDriver::$defaultOS = $os;
+        GeckoDriver::$version = $args['gdVersion'] ?? GeckoDriver::$version;
+
+        ChromeDriver::$defaultOS = $os;
+        ChromeDriver::$version = $args['cdVersion'] ?? ChromeDriver::$version;
+
+        GeckoDriver::download();
+        ChromeDriver::download();
     }
 
     private static function determineOS(): string
     {
         return strtolower(php_uname('s')) . (8 * PHP_INT_SIZE);
-    }
-
-    private static function buildGeckoDriverUrl(
-        string $os,
-        string $version
-    ): string {
-        return 'https://github.com/mozilla/geckodriver/releases/download/'
-            . "v{$version}/geckodriver-v{$version}-{$os}.tar.gz";
-    }
-
-    private static function buildChromeDriverUrl(
-        string $os,
-        string $version
-    ): string {
-        return "https://chromedriver.storage.googleapis.com/{$version}/"
-            . "chromedriver_{$os}.zip";
-    }
-
-    private static function buildSeleniumUrl(string $version): string
-    {
-        return 'http://selenium-release.storage.googleapis.com/'
-            . substr($version, 0, strpos($version, '.', 2))
-            . "/selenium-server-standalone-{$version}.jar";
-    }
-
-    private static function downloadFile($filename, $url)
-    {
-        echo "Downloading $url into $filename.\n";
-        stream_copy_to_stream(
-            fopen($url, 'r'),
-            fopen($filename, 'w')
-        );
     }
 
     /**

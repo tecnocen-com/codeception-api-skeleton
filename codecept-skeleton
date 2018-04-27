@@ -3,6 +3,11 @@
 require __DIR__ . '/vendor/autoload.php';
 
 use CodeceptionSkeleton\Installer;
+use CodeceptionSkeleton\WebFile\{
+    SeleniumDriver,
+    ChromeDriver,
+    GeckoDriver
+};
 
 $cmd = $argv[0];
 
@@ -47,18 +52,18 @@ if (in_array('-i', $argv)) {
 function extractDrivers()
 {
     $zip = new ZipArchive();
-    if ($zip->open(Installer::CHROMEDRIVER_FILENAME)) {
+    if ($zip->open(ChromeDriver::$fileName)) {
         $zip->extractTo(__DIR__);
         $zip->close();
     }
 
-    $gzip = new PharData(__DIR__ .'/'. Installer::GECKODRIVER_FILENAME);
+    $gzip = new PharData(__DIR__ .'/'. GeckoDriver::$fileName);
     $gzip->extractTo(__DIR__);
 }
 
 function flushTempFiles() {
-    unlink(__DIR__.'/'.Installer::GECKODRIVER_FILENAME);
-    unlink(__DIR__.'/'.Installer::CHROMEDRIVER_FILENAME);
+    unlink(__DIR__.'/'.GeckoDriver::$fileName);
+    unlink(__DIR__.'/'.ChromeDriver::$fileName);
 }
 
 function usage()
