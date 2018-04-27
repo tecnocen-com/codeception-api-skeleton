@@ -1,0 +1,92 @@
+#!/usr/bin/php
+<?php
+require __DIR__ . '/vendor/autoload.php';
+
+use CodeceptionSkeleton\Installer;
+use CodeceptionSkeleton\WebFile\{
+    SeleniumDriver,
+    ChromeDriver,
+    GeckoDriver
+};
+
+$cmd = $argv[0];
+
+if ($argc === 1 || in_array('-h', $argv)) {
+    usage();
+    exit(1);
+}
+
+if (!is_writable(__DIR__)) {
+    echo 'Required writing permissions';
+    exit(1);
+}
+
+if (in_array('-i', $argv)) {
+    $options = array_merge([
+        'os' => null,
+        'selenium' => null,
+        'gecko' => null,
+        'chrome' => null,
+    ], getopt('', ['os:', 'selenium:', 'gecko:', 'chrome:']));
+
+    foreach ($options as $option => $value) {
+        switch ($option) {
+            case 'os':
+                Installer::downloadDrivers(array_merge([
+                    'gdVersion' => $options['gecko'],
+                    'cdVersion' => $options['chrome'],
+                ], $options));
+
+                extractDrivers();
+                flushTempFiles();
+                break;
+
+            case 'selenium':
+                Installer::downloadSelenium($options);
+                break;
+        }
+    }
+
+}
+
+function extractDrivers()
+{
+    $zip = new ZipArchive();
+    if ($zip->open(ChromeDriver::$fileName)) {
+        $zip->extractTo(__DIR__);
+        $zip->close();
+    }
+
+    $gzip = new PharData(__DIR__ .'/'. GeckoDriver::$fileName);
+    $gzip->extractTo(__DIR__);
+}
+
+function flushTempFiles() {
+    unlink(__DIR__.'/'.GeckoDriver::$fileName);
+    unlink(__DIR__.'/'.ChromeDriver::$fileName);
+}
+
+function usage()
+{
+    global $cmd;
+
+    echo <<<EOL
+\033[1;31mNAME \033[0m
+    \033[0;32m$cmd \033[0m- Skeleton to create codeception tests using for external projects
+
+\033[1;31mSYNOPSIS \033[0m
+    \033[0;32m$cmd \033[0m-i [--os OS] [--selenium VERSION]
+
+\033[1;31mDESCRIPTION \033[0m
+    \033[0;32m$cmd \033[0mwill install the php dependencies using composer and download "selenium standalone" and the supported
+    webdrivers in the files: selenium-ss.jar, geckodriver and chromedriver. 
+
+\033[1;31mEXAMPLES \033[0m
+    \033[0;32m$cmd \033[0m-i --os linux64
+        Download the drivers for GNU/Linux 32 version.
+
+    \033[0;32m$cmd \033[0m-i --selenium 3.11.0
+        Download Selenium Standalone Server 3.11.0.
+
+EOL;
+}

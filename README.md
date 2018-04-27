@@ -10,7 +10,7 @@ Skeleton to create codeception tests using for external projects using suites
 Requirements
 ------------
 
-- Php >=7.0
+- PHP >=7.0
 - Composer >=1.3
 - Java JDK able to run selenium web drivers
   [Official Documentation](http://www.seleniumhq.org/docs/03_webdriver.jsp#php)
